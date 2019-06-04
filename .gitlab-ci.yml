@@ -55,7 +55,7 @@ k8s-deploy:
   - gcloud container clusters get-credentials standard-cluster-1
   - if kubectl get secrets | grep registry.gitlab.com; then kubectl delete secret registry.gitlab.com; fi
   - kubectl create secret docker-registry registry.gitlab.com --docker-server=https://registry.gitlab.com --docker-username=mmarquezvacas --docker-password=$REGISTRY_PASSWD --docker-email=mmarquezvacas@gmail.com
-  - kubectl apply -f frontend-deployment.yaml
+  - kubectl apply -f devops-bp-deployment.yaml
   - kubectl delete pods -l app=devopsbp-k8s-microservice
 
 k8s-test:
