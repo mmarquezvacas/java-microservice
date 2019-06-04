@@ -9,23 +9,23 @@ variables:
 stages:
   - build
   - package
-  #- warmup
+  - warmup
   #- deploy
   #- test
   #- teardown
 
-#warmup:
-#  image: google/cloud-sdk
-#  stage: warmup
-#  script:
-#  - echo "$GOOGLE_KEY" > key.json
-#  - gcloud auth activate-service-account --key-file key.json
-#  - gcloud config set compute/zone us-central1
-#  - gcloud config set project learned-skill-160816
-#  - gcloud config set container/use_client_certificate True
-#  - gcloud config unset container/use_client_certificate  # test line
-#  - gcloud container clusters get-credentials mycluster
-#  - gcloud container clusters resize mycluster --size 2 --quiet --zone us-central1-a
+warmup:
+  image: google/cloud-sdk
+  stage: warmup
+  script:
+  - echo "$GOOGLE_KEY" > key.json
+  - gcloud auth activate-service-account --key-file key.json
+  - gcloud config set compute/zone us-central1-a
+  - gcloud config set project learned-skill-160816
+  - gcloud config set container/use_client_certificate True
+  - gcloud config unset container/use_client_certificate  # test line
+  - gcloud container clusters get-credentials standard-cluster-1
+  - gcloud container clusters resize standard-cluster-1 --size 2 --quiet --zone us-central1-a
 
 maven-build:
   image: maven:3-jdk-8
@@ -42,7 +42,7 @@ docker-build:
   - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
   - docker push registry.gitlab.com/mmarquezvacas/java-microservice
 
-#devopsbp-deploy:
+#k8s-deploy:
 #  image: google/cloud-sdk
 #  stage: deploy
 #  script:
@@ -52,13 +52,13 @@ docker-build:
 #  - gcloud config set project micro-228014
 #  - gcloud config set container/use_client_certificate True
 #  - gcloud config unset container/use_client_certificate  # test line
-#  - gcloud container clusters get-credentials mycluster
+#  - gcloud container clusters get-credentials standard-cluster-1
 #  - if kubectl get secrets | grep registry.gitlab.com; then kubectl delete secret registry.gitlab.com; fi
 #  - kubectl create secret docker-registry registry.gitlab.com --docker-server=https://registry.gitlab.com --docker-username=nlonginow --docker-password=$REGISTRY_PASSWD --docker-email=nick.longinow@teradata.com
 #  - kubectl apply -f frontend-deployment.yaml
-#  - kubectl delete pods -l app=demo-devopsbp-frontend
+#  - kubectl delete pods -l app=demo-k8s-frontend
 #
-#devopsbp-test:
+#k8s-test:
 #  image: google/cloud-sdk
 #  stage: test
 #  script:
@@ -69,8 +69,8 @@ docker-build:
 #  - gcloud config set project micro-228014
 #  - gcloud config set container/use_client_certificate True
 #  - gcloud config unset container/use_client_certificate  # test line
-#  - gcloud container clusters get-credentials mycluster
-#  - webserv=`kubectl describe se  rvice demo-devopsbp-frontend | grep Ingress | cut -c26-40`
+#  - gcloud container clusters get-credentials standard-cluster-1
+#  - webserv=`kubectl describe service demo-k8s-frontend | grep Ingress | cut -c26-40`
 #  - echo $webserv
 #  - port=`kubectl describe configmap kubedns-config | grep -A2 'frontend.port' | tail -n 1`
 #  - echo $port
@@ -89,7 +89,7 @@ docker-build:
 #  - gcloud config set project micro-228014
 #  - gcloud config set container/use_client_certificate True
 #  - gcloud config unset container/use_client_certificate  # test line
-#  - gcloud container clusters get-credentials mycluster
-#  - gcloud container clusters resize mycluster --size 0 --quiet --zone us-central1-a
+#  - gcloud container clusters get-credentials standard-cluster-1
+#  - gcloud container clusters resize standard-cluster-1 --size 0 --quiet --zone us-central1-a
 
 
