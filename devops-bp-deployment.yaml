@@ -1,12 +1,12 @@
-#kind: ConfigMap
-#apiVersion: v1
-#metadata:
-# name: kubedns-config
-# namespace: default
-#data:
-# devopsbp.dns: devopsbp-k8s-staff
-# devopsbp.port: "8081"
-#---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+ name: kubedns-config
+ namespace: default
+data:
+ devopsbp.dns: devopsbp-k8s-staff
+ devopsbp.port: "8080"
+---
 kind: Service
 apiVersion: v1
 metadata:

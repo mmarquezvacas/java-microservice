@@ -4,4 +4,4 @@ metadata:
  name: kubedns-config
  namespace: default
 data:
- staff.dns: demo-k8s-staff 
+ staff.dns: devopsbp-k8s-staff
