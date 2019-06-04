@@ -10,9 +10,9 @@ stages:
   - build
   - package
   - warmup
-  #- deploy
-  #- test
-  #- teardown
+  - deploy
+  - test
+  - teardown
 
 warmup:
   image: google/cloud-sdk
@@ -42,54 +42,53 @@ docker-build:
   - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
   - docker push registry.gitlab.com/mmarquezvacas/java-microservice
 
-#k8s-deploy:
-#  image: google/cloud-sdk
-#  stage: deploy
-#  script:
-#  - echo "$GOOGLE_KEY" > key.json
-#  - gcloud auth activate-service-account --key-file key.json
-#  - gcloud config set compute/zone us-central1-a
-#  - gcloud config set project micro-228014
-#  - gcloud config set container/use_client_certificate True
-#  - gcloud config unset container/use_client_certificate  # test line
-#  - gcloud container clusters get-credentials standard-cluster-1
-#  - if kubectl get secrets | grep registry.gitlab.com; then kubectl delete secret registry.gitlab.com; fi
-#  - kubectl create secret docker-registry registry.gitlab.com --docker-server=https://registry.gitlab.com --docker-username=nlonginow --docker-password=$REGISTRY_PASSWD --docker-email=nick.longinow@teradata.com
-#  - kubectl apply -f frontend-deployment.yaml
-#  - kubectl delete pods -l app=demo-k8s-frontend
-#
-#k8s-test:
-#  image: google/cloud-sdk
-#  stage: test
-#  script:
-#  - echo 'Gathering details for the smoke test...'
-#  - echo "$GOOGLE_KEY" > key.json
-#  - gcloud auth activate-service-account --key-file key.json
-#  - gcloud config set compute/zone us-central1-a
-#  - gcloud config set project micro-228014
-#  - gcloud config set container/use_client_certificate True
-#  - gcloud config unset container/use_client_certificate  # test line
-#  - gcloud container clusters get-credentials standard-cluster-1
-#  - webserv=`kubectl describe service demo-k8s-frontend | grep Ingress | cut -c26-40`
-#  - echo $webserv
-#  - port=`kubectl describe configmap kubedns-config | grep -A2 'frontend.port' | tail -n 1`
-#  - echo $port
-#  - full=$webserv":"$port
-#  - echo $full
-#  - echo 'Ready.  Starting smoke test...'
-#  - ./smokeTest.sh  $full "$TEST_ONE_KEYWORD"
-#
-#teardown:
-#  image: google/cloud-sdk
-#  stage: teardown
-#  script:
-#  - echo "$GOOGLE_KEY" > key.json
-#  - gcloud auth activate-service-account --key-file key.json
-#  - gcloud config set compute/zone us-central1-a
-#  - gcloud config set project micro-228014
-#  - gcloud config set container/use_client_certificate True
-#  - gcloud config unset container/use_client_certificate  # test line
-#  - gcloud container clusters get-credentials standard-cluster-1
-#  - gcloud container clusters resize standard-cluster-1 --size 0 --quiet --zone us-central1-a
+k8s-deploy:
+  image: google/cloud-sdk
+  stage: deploy
+  script:
+  - echo "$GOOGLE_KEY" > key.json
+  - gcloud auth activate-service-account --key-file key.json
+  - gcloud config set compute/zone us-central1-a
+  - gcloud config set project learned-skill-160816
+  - gcloud config set container/use_client_certificate True
+  - gcloud config unset container/use_client_certificate  # test line
+  - gcloud container clusters get-credentials standard-cluster-1
+  - if kubectl get secrets | grep registry.gitlab.com; then kubectl delete secret registry.gitlab.com; fi
+  - kubectl create secret docker-registry registry.gitlab.com --docker-server=https://registry.gitlab.com --docker-username=mmarquezvacas --docker-password=$REGISTRY_PASSWD --docker-email=mmarquezvacas@gmail.com
+  - kubectl apply -f frontend-deployment.yaml
+  - kubectl delete pods -l app=devopsbp-k8s-microservice
+
+k8s-test:
+  image: google/cloud-sdk
+  stage: test
+  script:
+  - echo "$GOOGLE_KEY" > key.json
+  - gcloud auth activate-service-account --key-file key.json
+  - gcloud config set compute/zone us-central1-a
+  - gcloud config set project learned-skill-160816
+  - gcloud config set container/use_client_certificate True
+  - gcloud config unset container/use_client_certificate  # test line
+  - gcloud container clusters get-credentials standard-cluster-1
+  - webserv=`kubectl describe service devopsbp-k8s-microservice | grep Ingress | cut -c26-40`
+  - echo $webserv
+  - port=`kubectl describe configmap kubedns-config | grep -A2 'devopsbp.port' | tail -n 1`
+  - echo $port
+  - full=$webserv":"$port
+  - echo $full
+  - echo 'Ready.  Starting smoke test...'
+  - ./smokeTest.sh  $full "$TEST_ONE_KEYWORD"
+
+teardown:
+  image: google/cloud-sdk
+  stage: teardown
+  script:
+  - echo "$GOOGLE_KEY" > key.json
+  - gcloud auth activate-service-account --key-file key.json
+  - gcloud config set compute/zone us-central1-a
+  - gcloud config set project micro-228014
+  - gcloud config set container/use_client_certificate True
+  - gcloud config unset container/use_client_certificate  # test line
+  - gcloud container clusters get-credentials standard-cluster-1
+  - gcloud container clusters resize standard-cluster-1 --size 0 --quiet --zone us-central1-a
 
 

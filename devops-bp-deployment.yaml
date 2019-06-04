@@ -1,0 +1,42 @@
+#kind: ConfigMap
+#apiVersion: v1
+#metadata:
+# name: kubedns-config
+# namespace: default
+#data:
+# devopsbp.dns: devopsbp-k8s-staff
+# devopsbp.port: "8081"
+#---
+kind: Service
+apiVersion: v1
+metadata:
+  name: devopsbp-k8s-microservice
+spec:
+  selector:
+    app: devopsbp-k8s-microservice
+  ports:
+  - protocol: TCP
+    port: 8081
+    name: theport
+  type: LoadBalancer 
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devopsbp-k8s-microservice
+spec:
+  selector:
+      matchLabels:
+        app: devopsbp-k8s-microservice
+  replicas: 1 
+  template:
+    metadata:
+      labels:
+        app: devopsbp-k8s-microservice
+    spec:
+      containers:
+        - name: devopsbp-k8s-microservice
+          image: registry.gitlab.com/mmarquezvacas/java-microservice
+          ports:
+            - containerPort: 8081
+
