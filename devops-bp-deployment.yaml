@@ -10,7 +10,7 @@ data:
 kind: Service
 apiVersion: v1
 metadata:
-  name: devopsbp-k8s-microservice
+  name: devopsbp-k8s-microservice-load-balancer
 spec:
   selector:
     app: devopsbp-k8s-microservice
@@ -53,5 +53,5 @@ spec:
       nodePort: 30001
       protocol: TCP
   selector:
-app: devopsbp-k8s-microservice
+    app: devopsbp-k8s-microservice
 
