@@ -85,7 +85,7 @@ teardown:
   - echo "$GOOGLE_KEY" > key.json
   - gcloud auth activate-service-account --key-file key.json
   - gcloud config set compute/zone us-central1-a
-  - gcloud config set project micro-228014
+  - gcloud config set project learned-skill-160816
   - gcloud config set container/use_client_certificate True
   - gcloud config unset container/use_client_certificate  # test line
   - gcloud container clusters get-credentials standard-cluster-1
