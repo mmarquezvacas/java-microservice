@@ -42,7 +42,7 @@ docker-build:
   - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
   - docker push registry.gitlab.com/mmarquezvacas/java-microservice
 
-#k8s-deploy:
+#devopsbp-deploy:
 #  image: google/cloud-sdk
 #  stage: deploy
 #  script:
@@ -56,9 +56,9 @@ docker-build:
 #  - if kubectl get secrets | grep registry.gitlab.com; then kubectl delete secret registry.gitlab.com; fi
 #  - kubectl create secret docker-registry registry.gitlab.com --docker-server=https://registry.gitlab.com --docker-username=nlonginow --docker-password=$REGISTRY_PASSWD --docker-email=nick.longinow@teradata.com
 #  - kubectl apply -f frontend-deployment.yaml
-#  - kubectl delete pods -l app=demo-k8s-frontend
+#  - kubectl delete pods -l app=demo-devopsbp-frontend
 #
-#k8s-test:
+#devopsbp-test:
 #  image: google/cloud-sdk
 #  stage: test
 #  script:
@@ -70,7 +70,7 @@ docker-build:
 #  - gcloud config set container/use_client_certificate True
 #  - gcloud config unset container/use_client_certificate  # test line
 #  - gcloud container clusters get-credentials mycluster
-#  - webserv=`kubectl describe se  rvice demo-k8s-frontend | grep Ingress | cut -c26-40`
+#  - webserv=`kubectl describe se  rvice demo-devopsbp-frontend | grep Ingress | cut -c26-40`
 #  - echo $webserv
 #  - port=`kubectl describe configmap kubedns-config | grep -A2 'frontend.port' | tail -n 1`
 #  - echo $port
