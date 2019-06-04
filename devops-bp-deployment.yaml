@@ -4,8 +4,8 @@ metadata:
  name: kubedns-config
  namespace: default
 data:
- devopsbp.dns: devopsbp-k8s-staff
- devopsbp.port: "8080"
+ devopsbp.dns: devopsbp-k8s-microservice
+ devopsbp.port: "8081"
 ---
 kind: Service
 apiVersion: v1
