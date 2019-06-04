@@ -1,4 +1,8 @@
 package com.pichincha;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -7,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 public class DevOpsSpringRestController {
 
     protected static final String STATIC_REST_API_KEY = "2f5ae96c-b558-4c7b-a590-a501ae1c3f6c";
+    private Logger log = LoggerFactory.getLogger(DevOpsSpringRestController.class);
 
     @RequestMapping(path = "/DevOps", method= RequestMethod.POST)
     public ResponseEntity<GenericResponseMessage> genericMessageInformation(@RequestBody GenericPostMessageInformation genericMessageInformation, @RequestHeader(value="X-Parse-REST-API-Key") String restApiKey) {

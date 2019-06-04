@@ -2,6 +2,7 @@ package com.pichincha;
 import static com.jayway.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 
+
 import com.jayway.restassured.http.ContentType;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,7 +45,7 @@ public class SpringRestControllerTest {
     }
 
     @Test
-    public void shouldReturnErrorForGetHttpMethod() throws JSONException {
+    public void mustReturnErrorForGetHttpMethod() throws JSONException {
         given()
                 .header("X-Parse-REST-API-Key", DevOpsSpringRestController.STATIC_REST_API_KEY)
                 .contentType(ContentType.JSON)
@@ -56,7 +57,7 @@ public class SpringRestControllerTest {
     }
 
     @Test
-    public void shouldReturnErrorForDeleteHttpMethod() throws JSONException {
+    public void mustReturnErrorForDeleteHttpMethod() throws JSONException {
         given()
                 .header("X-Parse-REST-API-Key", DevOpsSpringRestController.STATIC_REST_API_KEY)
                 .contentType(ContentType.JSON)
@@ -68,7 +69,7 @@ public class SpringRestControllerTest {
     }
 
     @Test
-    public void shouldReturnErrorForPutHttpMethod() throws JSONException {
+    public void mustReturnErrorForPutHttpMethod() throws JSONException {
         given()
                 .header("X-Parse-REST-API-Key", DevOpsSpringRestController.STATIC_REST_API_KEY)
                 .contentType(ContentType.JSON)
@@ -80,7 +81,7 @@ public class SpringRestControllerTest {
     }
 
     @Test
-    public void shouldReturnErrorForInvalidRestApiKey() throws JSONException {
+    public void mustReturnErrorForInvalidRestApiKey() throws JSONException {
         given()
                 .header("X-Parse-REST-API-Key", "invalidaApiKey")
                 .contentType(ContentType.JSON)
