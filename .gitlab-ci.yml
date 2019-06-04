@@ -25,7 +25,7 @@ warmup:
   - gcloud config set container/use_client_certificate True
   - gcloud config unset container/use_client_certificate  # test line
   - gcloud container clusters get-credentials standard-cluster-1
-  - gcloud container clusters resize standard-cluster-1 --size 2 --quiet --zone us-central1-a
+  - gcloud container clusters resize standard-cluster-1 --size 3 --quiet --zone us-central1-a
 
 maven-build:
   image: maven:3-jdk-8

@@ -2,7 +2,7 @@
 webserv=$1
 keyword=$2
 echo "curl " http://$webserv " | grep '" $keyword "'"
-if curl http://"$webserv"/health | grep "$keyword" > /dev/null
+if curl http://"$webserv"/DevOps | grep "$keyword" > /dev/null
 then
     # if the keyword is in the content
     echo "success" 
