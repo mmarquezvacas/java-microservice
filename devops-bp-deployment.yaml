@@ -20,19 +20,6 @@ spec:
     serviceName: devopsbp-k8s-microservice
     servicePort: 80
 ---
-kind: Service
-apiVersion: v1
-metadata:
-  name: devopsbp-k8s-microservice-load-balancer
-spec:
-  selector:
-    app: devopsbp-k8s-microservice
-  ports:
-  - protocol: TCP
-    port: 8081
-    name: theport
-  type: LoadBalancer 
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
