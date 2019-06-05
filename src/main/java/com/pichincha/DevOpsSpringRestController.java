@@ -43,6 +43,12 @@ public class DevOpsSpringRestController {
         return getErrorMessageForOtherHttpMethods();
     }
 
+    @RequestMapping(path = "/", method = RequestMethod.GET)
+    public ResponseEntity<GenericResponseMessage> getMethodMessageRootPath() {
+        return getErrorMessageForOtherHttpMethods();
+    }
+
+
     private ResponseEntity<GenericResponseMessage> getErrorMessageForOtherHttpMethods() {
         GenericResponseMessage genericResponseMessage = new GenericResponseMessage("ERROR");
         return new ResponseEntity<>(genericResponseMessage, HttpStatus.OK);

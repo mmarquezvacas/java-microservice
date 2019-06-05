@@ -92,6 +92,18 @@ public class SpringRestControllerTest {
                 .body("message", equalTo(errorJSONResponse.get("message")));
     }
 
+    @Test
+    public void mustReturn200ForGetMethodOnRoot() throws JSONException {
+        given()
+                .header("X-Parse-REST-API-Key", "invalidaApiKey")
+                .contentType(ContentType.JSON)
+                .body(jsonPayLoad.toString())
+                .get("/")
+                .then()
+                .assertThat()
+                .statusCode(equalTo(200));
+    }
+
     @Before
     public void setBaseUri () throws JSONException {
         RestAssured.port = port;

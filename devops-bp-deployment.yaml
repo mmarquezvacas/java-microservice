@@ -7,19 +7,6 @@ data:
  devopsbp.dns: devopsbp-k8s-microservice
  devopsbp.port: "8081"
 ---
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: tls-ingress
-  annotations: 
-    kubernetes.io/ingress.global-static-ip-name: "devopsbp-ip-name"
-spec:
-  tls:
-  - secretName: devopscert
-  backend:
-    serviceName: devopsbp-k8s-microservice
-    servicePort: 80
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -54,4 +41,18 @@ spec:
       protocol: TCP
   selector:
     app: devopsbp-k8s-microservice
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: tls-ingress
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: "devopsbp-ip-name"
+spec:
+  tls:
+  - secretName: devopscert
+  backend:
+    serviceName: devopsbp-k8s-microservice
+    servicePort: 8081
+---
 
