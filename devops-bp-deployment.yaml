@@ -43,7 +43,7 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: devopsbp-k8s-microservice-nodeport
+  name: devopsbp-k8s-microservice
   labels:
     app: devopsbp-k8s-microservice
 spec:
