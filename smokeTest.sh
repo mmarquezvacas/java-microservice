@@ -1,7 +1,7 @@
 #!/bin/sh
 webserv=$1
 keyword=$2
-echo "curl " http://$webserv " | grep '" $keyword "'"
+echo "curl " http://$webserv " | grep '"$keyword"'"
 if curl http://"$webserv"/DevOps | grep "$keyword" > /dev/null
 then
     # if the keyword is in the content
