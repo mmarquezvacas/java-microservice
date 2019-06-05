@@ -9,12 +9,11 @@ public class GenericResponseMessage {
 
     @Override
     public String toString() {
-        return "GenericResponseMessage{" +
-                "message='" + message + '\'' +
-                '}';
+        return "GenericResponseMessage{"
+                +"message='" + message + '\'' + '}';
     }
 
-    public String message;
+    private String message;
 
     @Override
     public boolean equals(Object o) {
@@ -31,9 +30,5 @@ public class GenericResponseMessage {
 
     public String getMessage() {
         return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 }

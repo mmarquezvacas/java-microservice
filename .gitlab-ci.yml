@@ -12,7 +12,6 @@ stages:
   - warmup
   - deploy
   - test
-  - teardown
 
 warmup:
   image: google/cloud-sdk
@@ -30,7 +29,7 @@ warmup:
 maven-build:
   image: maven:3-jdk-8
   stage: build
-  script: "mvn package -B spring-boot:repackage"
+  script: "mvn package -Dmaven.test.skip=true -B spring-boot:repackage"
   artifacts:
     paths:
       - target/*.jar
@@ -71,25 +70,10 @@ k8s-test:
   - gcloud container clusters get-credentials standard-cluster-1
   - webserv=34.95.125.245/DevOps
   - echo $webserv
-  - port=`kubectl describe configmap kubedns-config | grep -A2 'devopsbp.port' | tail -n 1`
-  #- echo $port
-  #- full=$webserv":"$port
   - full=$webserv
   - echo $full
   - echo 'Ready.  Starting smoke test...'
   - ./smokeTest.sh  $full "$TEST_ONE_KEYWORD"
 
-teardown:
-  image: google/cloud-sdk
-  stage: teardown
-  script:
-  - echo "$GOOGLE_KEY" > key.json
-  - gcloud auth activate-service-account --key-file key.json
-  - gcloud config set compute/zone us-central1-a
-  - gcloud config set project learned-skill-160816
-  - gcloud config set container/use_client_certificate True
-  - gcloud config unset container/use_client_certificate  # test line
-  - gcloud container clusters get-credentials standard-cluster-1
-  - gcloud container clusters resize standard-cluster-1 --size 0 --quiet --zone us-central1-a
 
 

@@ -1,8 +1,5 @@
 package com.pichincha;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,9 +8,8 @@ import org.springframework.web.bind.annotation.*;
 public class DevOpsSpringRestController {
 
     protected static final String STATIC_REST_API_KEY = "2f5ae96c-b558-4c7b-a590-a501ae1c3f6c";
-    private Logger log = LoggerFactory.getLogger(DevOpsSpringRestController.class);
 
-    @RequestMapping(path = "/DevOps", method= RequestMethod.POST)
+    @PostMapping(path = "/DevOps")
     public ResponseEntity<GenericResponseMessage> genericMessageInformation(@RequestBody GenericPostMessageInformation genericMessageInformation, @RequestHeader(value="X-Parse-REST-API-Key") String restApiKey) {
         GenericResponseMessage genericResponseMessage =
                 new GenericResponseMessage("Hello "
@@ -28,22 +24,22 @@ public class DevOpsSpringRestController {
         }
     }
 
-    @RequestMapping(path = "/DevOps", method= RequestMethod.GET)
+    @GetMapping(path = "/DevOps")
     public ResponseEntity<GenericResponseMessage> getMethodErrorMessage() {
         return getErrorMessageForOtherHttpMethods();
     }
 
-    @RequestMapping(path = "/DevOps", method= RequestMethod.DELETE)
+    @DeleteMapping(path = "/DevOps")
     public ResponseEntity<GenericResponseMessage> deleteMethodErrorMessage() {
         return getErrorMessageForOtherHttpMethods();
     }
 
-    @RequestMapping(path = "/DevOps", method= RequestMethod.PUT)
+    @PutMapping(path = "/DevOps")
     public ResponseEntity<GenericResponseMessage> putMethodErrorMessage() {
         return getErrorMessageForOtherHttpMethods();
     }
 
-    @RequestMapping(path = "/", method = RequestMethod.GET)
+    @GetMapping(path = "/")
     public ResponseEntity<GenericResponseMessage> getMethodMessageRootPath() {
         return getErrorMessageForOtherHttpMethods();
     }
