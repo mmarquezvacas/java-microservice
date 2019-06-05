@@ -69,11 +69,12 @@ k8s-test:
   - gcloud config set container/use_client_certificate True
   - gcloud config unset container/use_client_certificate  # test line
   - gcloud container clusters get-credentials standard-cluster-1
-  - webserv=`kubectl describe service devopsbp-k8s-microservice | grep Ingress | cut -c26-40`
+  - webserv=34.95.125.245/DevOps
   - echo $webserv
   - port=`kubectl describe configmap kubedns-config | grep -A2 'devopsbp.port' | tail -n 1`
-  - echo $port
-  - full=$webserv":"$port
+  #- echo $port
+  #- full=$webserv":"$port
+  - full=$webserv
   - echo $full
   - echo 'Ready.  Starting smoke test...'
   - ./smokeTest.sh  $full "$TEST_ONE_KEYWORD"
