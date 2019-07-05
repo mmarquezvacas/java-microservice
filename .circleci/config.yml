@@ -1,15 +1,8 @@
-version: 2.1
+version: 2
 jobs:
-  build-maven:
+  build:
     docker:
-      - image: circleci/8u212-b04-jdk-stretch
+      - image: busybox
+    working_directory: /home/circleci/image-builder
     steps:
-      - checkout
-      - run:
-        name: Maven Build
-        command: mvn package -Dmaven.test.skip=true -B spring-boot:repackage
-workflows:
-  version: 2.1
-  bp-circleci-workflow:
-    jobs:
-    - build-maven
+      - run: echo doing nothing.
