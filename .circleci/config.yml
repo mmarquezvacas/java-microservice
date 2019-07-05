@@ -4,4 +4,4 @@ jobs:
     docker:
       - image: circleci/openjdk:8u212-b04-jdk-stretch
     steps:
-      - run: java -version
+      - run: mvn package -Dmaven.test.skip=true -B spring-boot:repackage
