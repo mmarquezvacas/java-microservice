@@ -17,3 +17,4 @@ jobs:
             - ~/.m2
           key: sample-springboot-api-{{ checksum "pom.xml" }}
       - run: mvn package -Dmaven.test.skip=true -B spring-boot:repackage
+      - run: echo Finito
