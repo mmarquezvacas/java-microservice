@@ -1,14 +1,15 @@
 version: 2.1
 jobs:
-  build:
+  build-maven:
     docker:
-        - image: circleci/8u212-b04-jdk-stretch
+      - image: circleci/8u212-b04-jdk-stretch
     steps:
       - checkout
       - run:
         name: Maven Build
         command: mvn package -Dmaven.test.skip=true -B spring-boot:repackage
 workflows:
+  version: 2.1
   bp-circleci-workflow:
     jobs:
-      - build
+    - build-maven
